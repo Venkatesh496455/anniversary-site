@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 html {
   scroll-behavior: smooth;
@@ -13,6 +15,8 @@ body {
   color: white;
   font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -26,19 +30,32 @@ body {
       rgba(0, 0, 0, 0.82)
     ),
     url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=2070&auto=format&fit=crop');
+
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   position: relative;
+  overflow: hidden;
 }
 
 .hero-bg::before {
   content: "";
   position: absolute;
   inset: 0;
+
   background:
-    radial-gradient(circle at top left, rgba(255, 0, 128, 0.15), transparent 35%),
-    radial-gradient(circle at bottom right, rgba(255, 100, 150, 0.12), transparent 35%);
+    radial-gradient(
+      circle at top left,
+      rgba(255, 0, 128, 0.18),
+      transparent 35%
+    ),
+
+    radial-gradient(
+      circle at bottom right,
+      rgba(255, 100, 150, 0.14),
+      transparent 35%
+    );
+
   z-index: 1;
 }
 
@@ -49,12 +66,28 @@ body {
 
 .glass-card {
   background: rgba(255, 255, 255, 0.08);
+
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+
   border: 1px solid rgba(255, 255, 255, 0.12);
+
   box-shadow:
     0 8px 32px rgba(255, 0, 128, 0.08),
     inset 0 1px 1px rgba(255,255,255,0.08);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border 0.35s ease;
+}
+
+.glass-card:hover {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  box-shadow:
+    0 10px 40px rgba(255, 0, 128, 0.12),
+    inset 0 1px 1px rgba(255,255,255,0.1);
 }
 
 .timeline-line {
@@ -68,6 +101,7 @@ body {
 
 img {
   user-select: none;
+  -webkit-user-drag: none;
 }
 
 ::-webkit-scrollbar {
@@ -84,7 +118,16 @@ img {
     #ff4d88,
     #ff80aa
   );
+
   border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    #ff5c94,
+    #ff91b5
+  );
 }
 
 ::selection {
@@ -93,24 +136,71 @@ img {
 
 body::before {
   content: "";
+
   position: fixed;
+
   width: 500px;
   height: 500px;
+
   background: rgba(255, 0, 120, 0.08);
+
   filter: blur(140px);
+
   top: -100px;
   left: -100px;
+
   z-index: -1;
 }
 
 body::after {
   content: "";
+
   position: fixed;
+
   width: 500px;
   height: 500px;
+
   background: rgba(255, 120, 180, 0.08);
+
   filter: blur(140px);
+
   bottom: -100px;
   right: -100px;
+
   z-index: -1;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 768px) {
+
+  .hero-bg {
+    background-attachment: scroll;
+  }
+
+  body::before,
+  body::after {
+    width: 300px;
+    height: 300px;
+  }
+
+  .glass-card {
+    backdrop-filter: blur(14px);
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .glass-card {
+    border-radius: 24px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
 }
